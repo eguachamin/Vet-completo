@@ -1,7 +1,34 @@
+import axios from 'axios'
+import { useState } from 'react'
 import {Link} from 'react-router-dom'
 
 
 export const Forgot = () => {
+    //Paso 1
+    const [mail,setMail] =useState({
+        email:""
+    })
+    //Paso 2
+    const handleChange = (e) => {
+      setMail({
+        ...mail,
+        [e.target.name]:e.target.value
+      })
+    }
+    //Paso 3
+    const handleSubmit = async (e) => {
+      e.preventDefault()
+      try {
+        const url ="http://localhost:3000/api/recuperar-password"
+        const respuesta = await axios.post(url,mail)
+        console.log(respuesta)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    
+    //Paso 4
+
     return (
         <>
             <div className="bg-white flex justify-center items-center w-1/2">
@@ -12,11 +39,12 @@ export const Forgot = () => {
                     <small className="text-gray-400 block my-4 text-sm">Don't worry, please enter your details</small>
 
 
-                    <form >
+                    <form onSubmit={handleSubmit}>
 
                         <div className="mb-1">
                             <label className="mb-2 block text-sm font-semibold">Email</label>
-                            <input type="email" placeholder="Enter you email" className="block w-full rounded-md border border-gray-300 focus:border-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-700 py-1 px-1.5 text-gray-500" />
+                            <input 
+                            name='email' value={mail.email || ""} onChange={handleChange} type="email" placeholder="Enter you email" className="block w-full rounded-md border border-gray-300 focus:border-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-700 py-1 px-1.5 text-gray-500" />
                         </div>
 
                         <div className="mb-3">

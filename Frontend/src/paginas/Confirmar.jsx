@@ -23,6 +23,10 @@ export const Confirmar = () => {
     useEffect(()=>{
         verifyToken()
     },[])
+    //solo una vez vacio
+    //caso contrario se puede clocar cuantas vecese por ejemplo cada ["F5"] se va a ejecutar ese use Effect
+    //array vacío significa cuantas veces se va a ejecutar este useEffect 
+    //paso algo se ejecuta 
     
     return (
         
