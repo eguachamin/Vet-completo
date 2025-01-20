@@ -24,19 +24,22 @@ const Login = () => {
     // Paso 3
     const handleSubmit = async (e) =>{
         e.preventDefault() //no se permite que se recargue en el formulario 
-        try {
-            const url = `${import.meta.env.VITE_BACKEND_URL}/login`
-            const respuesta = await axios.post(url,form)
-            localStorage.setItem('token',respuesta.data.token)
-            setAuth(respuesta.data)
-            console.log(respuesta)
-            toast.success(respuesta.data.msg)
-            navigate('/dashboard')
-        } catch (error) {
-            console.log(error)
-            toast.error(error.response.data.msg)
+            const url = form.password.includes("vet") ? `${import.meta.env.VITE_BACKEND_URL}/paciente/login`: 
+            `${import.meta.env.VITE_BACKEND_URL}/login`
+            try {
+                const respuesta = await axios.post(url,form)
+                localStorage.setItem('token',respuesta.data.token)
+                setAuth(respuesta.data)
+                console.log(respuesta)
+                toast.success(respuesta.data.msg)
+                navigate('/dashboard')
+            } catch (error) {
+                console.log(error)
+                toast.error(error.response.data.msg)
             
-        }
+            }
+            
+        
     }
     return (
         <>

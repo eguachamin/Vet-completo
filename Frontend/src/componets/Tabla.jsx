@@ -1,10 +1,12 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MdDeleteForever,MdNoteAdd,MdInfo} from "react-icons/md";
 import {useNavigate}from 'react-router-dom'
+import AuthContext from "../context/AuthProvider";
 
 
 const Tabla = () => {
+    const {auth}= useContext(AuthContext)
     const navigate = useNavigate()
     //Paso 1
     const [pacientes, setPacientes]=useState([])
@@ -87,11 +89,17 @@ const Tabla = () => {
                                     <td className='py-2 text-center'>
                                         <MdNoteAdd className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2" on onClick={()=>{navigate(`/dashboard/visualizar/${paciente._id}`)}}/>
 
-                                        <MdInfo className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2" on onClick={()=>{navigate(`/dashboard/actualizar/${paciente._id}`)}} />
-
-                                        <MdDeleteForever className="h-7 w-7 text-red-900 cursor-pointer inline-block" 
-                                        on onClick={()=>{handleDelete(paciente._id)}}
-                                        />
+                                        {
+                                             auth.rol === "veterinario" &&
+                                             (<>
+                                                <MdInfo className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2" on onClick={()=>{navigate(`/dashboard/actualizar/${paciente._id}`)}} />
+        
+                                                <MdDeleteForever className="h-7 w-7 text-red-900 cursor-pointer inline-block" 
+                                                on onClick={()=>{handleDelete(paciente._id)}}
+                                                />
+                                                </>)
+                                        }
+                                        
                                     </td>
                                 </tr>
                             ))

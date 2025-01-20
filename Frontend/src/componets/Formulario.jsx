@@ -1,8 +1,10 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios";
+import AuthContext from "../context/AuthProvider";
 
 export const Formulario = ({paciente}) => {
+    const {auth} = useContext(AuthContext)
     //Paso 3
         const navigate = useNavigate()
     //Paso 1 
@@ -11,7 +13,9 @@ export const Formulario = ({paciente}) => {
         propietario: paciente?.propietario ?? "",
         email: paciente?.email ?? "",
         celular: paciente?.celular ?? "",
-        salida: new Date (paciente?.salida).toLocaleDateString('en-CA',{timeZone:"UTC"}) ?? "",
+        salida: paciente?.salida
+        ? new Date(paciente.salida).toISOString().split("T")[0]
+        : "",
         convencional: paciente?.convencional ?? "",
         sintomas: paciente?.sintomas ?? ""
     })
@@ -48,6 +52,24 @@ export const Formulario = ({paciente}) => {
            console.log(error)
           }
       }
+      else {
+        try {
+            const token = localStorage.getItem('token')
+            form.id = auth._id
+            const url = `${import.meta.env.VITE_BACKEND_URL}/paciente/registro`
+            const options={
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            await axios.post(url,form,options)
+            navigate('/dashboard/listar');
+            
+        } catch (error) {
+            console.log(error)
+        }
+}
       
     }
     
@@ -136,7 +158,7 @@ export const Formulario = ({paciente}) => {
                     className='border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-5'
                     placeholder='salida'
                     name='salida'
-                    value = {form.salida || ""}
+                    value = {form.salida}
                     onChange={handleChange}
                 />
             </div>
@@ -160,7 +182,7 @@ export const Formulario = ({paciente}) => {
                 className='bg-gray-600 w-full p-3 
                     text-slate-300 uppercase font-bold rounded-lg 
                     hover:bg-gray-900 cursor-pointer transition-all'
-                value={paciente?.id ? 'Actualizar':'Registrar'} />
+                value={paciente?._id ? 'Actualizar':'Registrar'} />
 
         </form>
     )
