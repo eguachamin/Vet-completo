@@ -105,7 +105,7 @@ const Visualizar = () => {
                             {
                                 tratamientos.lenght ==0
                                 ?
-                                <p>no existen registros</p> :
+                                <p>No existen registros</p> :
                                 <TablaTratamientos tratamientos={tratamientos}/>
                             }
                             </>

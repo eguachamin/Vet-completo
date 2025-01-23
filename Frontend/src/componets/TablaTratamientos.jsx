@@ -33,10 +33,9 @@ const TablaTratamientos = ({tratamientos}) => {
                                 {
                                     auth.rol === "veterinario" && 
                                     (<>
-                                    <MdPublishedWithChanges className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
-                                        onClick={()=>{cambiarTratamiento(tratamiento._id)}}
-                                        />
-                                    <MdOutlineSecurityUpdateGood className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"/>
+                                    <MdPublishedWithChanges className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"/>
+                                    <MdOutlineSecurityUpdateGood className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                                    onClick={()=>{cambiarTratamiento(tratamiento._id)}}/>
                                     <MdDeleteForever className="h-8 w-8 text-red-900 cursor-pointer inline-block"
                                         onClick={()=>eliminarTratamiento(tratamiento._id)} 
                                         />

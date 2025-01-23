@@ -3,6 +3,7 @@ import { CardPerfil } from '../componets/Perfil/CardPerfil'
 import FormularioPerfil from '../componets/Perfil/FormularioPerfil'
 import AuthContext from '../context/AuthProvider'
 import { CardPerfilPaciente } from '../componets/Perfil/CardPerfilPaciente'
+import Password from '../componets/Perfil/Password'
 
 const Perfil = () => {
     const { auth } = useContext(AuthContext)
@@ -23,6 +24,7 @@ const Perfil = () => {
                         </div>
                         <div className='w-full md:w-1/2'>
                             <CardPerfil/>
+                            <Password/>
                         </div>
                     </div>)
             }

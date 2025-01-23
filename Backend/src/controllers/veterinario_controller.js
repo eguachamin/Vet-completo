@@ -36,6 +36,7 @@ const login = async(req,res)=>{
         telefono,
         _id,
         email:veterinarioBDD.email,
+        rol:"veterinario"
         
     })
 }
@@ -50,6 +51,7 @@ const perfil =(req,res)=>{
     delete req.veterinarioBDD.createdAt
     delete req.veterinarioBDD.updatedAt
     delete req.veterinarioBDD.__v
+    req.veterinarioBDD.rol = "veterinario"
     res.status(200).json(req.veterinarioBDD)
 }
 

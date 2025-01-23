@@ -24,11 +24,15 @@ const Login = () => {
     // Paso 3
     const handleSubmit = async (e) =>{
         e.preventDefault() //no se permite que se recargue en el formulario 
-            const url = form.password.includes("vet") ? `${import.meta.env.VITE_BACKEND_URL}/paciente/login`: 
+            const url = form.password.includes("vet") ? 
+            `${import.meta.env.VITE_BACKEND_URL}/paciente/login`
+            : 
             `${import.meta.env.VITE_BACKEND_URL}/login`
             try {
                 const respuesta = await axios.post(url,form)
                 localStorage.setItem('token',respuesta.data.token)
+                const rol = form.password.includes("vet") ? "paciente" : "veterinario";
+                localStorage.setItem('rol', rol);
                 setAuth(respuesta.data)
                 console.log(respuesta)
                 toast.success(respuesta.data.msg)
